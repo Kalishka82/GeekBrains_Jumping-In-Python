@@ -21,5 +21,5 @@ for key, value in my_dict.items():
     if weight <= MAX_WEIGTH:
         things_in.append(key)
     else:
-        break
+        weight -= value
 print(things_in)
