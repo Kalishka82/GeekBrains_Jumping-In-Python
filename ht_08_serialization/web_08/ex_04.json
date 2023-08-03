@@ -1,0 +1,20 @@
+[
+  {
+    "access_level": 2,
+    "user_id": "0000000015",
+    "name": "Masha",
+    "hash": -3467823436155071724
+  },
+  {
+    "access_level": 4,
+    "user_id": "0000000010",
+    "name": "Tanya",
+    "hash": 5265169708222656569
+  },
+  {
+    "access_level": 5,
+    "user_id": "0000000012",
+    "name": "Anton",
+    "hash": -4688155387497365742
+  }
+]
