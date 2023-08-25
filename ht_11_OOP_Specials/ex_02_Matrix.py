@@ -16,9 +16,9 @@ class Matrix:
 
     def __init__(self, matrix: list[list[int | float]]) -> None:
         """
-        :param matrix: [[int | float]]  -> матрица размерностью clmns X rows
-        :param rows: int                -> a rows number
-        :param clmns: int               -> a columns number
+        :param matrix: [[int | float]]  -> матрица размерностью rows X clmns
+        :param rows: int                -> a number of rows
+        :param clmns: int               -> a number of columns
         """
         self._matrix = matrix
         self._rows = len(matrix)
@@ -44,9 +44,9 @@ class Matrix:
             if self is other:
                 return flag
             else:
-                for j in range(self._rows):
-                    for i in range(self._clmns):
-                        if self._matrix[j][i] != other._matrix[j][i]:
+                for i in range(self._rows):
+                    for j in range(self._clmns):
+                        if self._matrix[i][j] != other._matrix[i][j]:
                             flag = False
                             break
         return flag
@@ -63,9 +63,9 @@ class Matrix:
             if self is other:
                 return flag
             else:
-                for j in range(self._rows):
-                    for i in range(self._clmns):
-                        if self._matrix[j][i] > other._matrix[j][i]:
+                for i in range(self._rows):
+                    for j in range(self._clmns):
+                        if self._matrix[i][j] > other._matrix[i][j]:
                             flag = False
                             break
         return flag
@@ -82,9 +82,9 @@ class Matrix:
             if self is other:
                 return flag
             else:
-                for j in range(self._rows):
-                    for i in range(self._clmns):
-                        if self._matrix[j][i] <= other._matrix[j][i]:
+                for i in range(self._rows):
+                    for j in range(self._clmns):
+                        if self._matrix[i][j] <= other._matrix[i][j]:
                             flag = False
                             break
         return flag
@@ -93,32 +93,34 @@ class Matrix:
         """Метод считает сумму матриц ОДИНАКОВОЙ размерности"""
         if not Matrix._eq_len(self, other):
             return print(self.ERROR_1)
-        new_mtrx = [[0 for _ in range(self._clmns)] for _ in range(self._rows)]
-        for j in range(self._rows):
-            for i in range(self._clmns):
-                new_mtrx[j][i] = self._matrix[j][i] + other._matrix[j][i]
+        new_mtrx = [[0 for j in range(self._clmns)] for i in range(self._rows)]
+        for i in range(self._rows):
+            for j in range(self._clmns):
+                new_mtrx[i][j] = self._matrix[i][j] + other._matrix[i][j]
         return Matrix(new_mtrx)
 
     def __mul__(self, other):
         """Метод считает умножение матриц"""
         if self._clmns != other._rows:
             return print(self.ERROR_2)
-        new_mtrx = [[0 for _ in range(self._clmns)] for _ in range(self._rows)]
-        for j in range(self._rows):
-            for i in range(self._clmns):
-                new_mtrx[j][i] = self._matrix[j][i] + other._matrix[i][j]
+        new_mtrx = [[0 for j in range(other._clmns)] for i in range(self._rows)]
+        for i in range(self._rows):
+            for j in range(other._clmns):
+                for k in range(self._clmns):
+                    new_mtrx[i][j] += self._matrix[i][k] * other._matrix[k][j]
         return Matrix(new_mtrx)
 
 
 def main():
-    mtrx_1 = Matrix([[0, 1, 2, 3], [4, 5, 6, 7]])
-    mtrx_2 = Matrix([[1, 2], [3, 4], [5, 6], [7, 8]])
-    mtrx_3 = Matrix([[2, 3, 4, 5], [6, 7, 8, 9]])
-    mtrx_4 = Matrix([[0, 1, 2, 3], [4, 5, 6, 7]])
+    mtrx_1 = Matrix([[2, 1], [-3, 0], [4, -1]])
+    mtrx_2 = Matrix([[5, -1, 6], [-3, 0, 7]])
+    mtrx_3 = Matrix([[4, 2], [0, 1], [5, 8]])
+    mtrx_4 = Matrix([[2, 1], [-3, 0], [4, -1]])
 
     mtrxs = (mtrx_1, mtrx_2, mtrx_3, mtrx_4)
     for elem in mtrxs:
         print(repr(elem))
+    print('---')
 
     print(mtrx_1 == mtrx_2, mtrx_1 == mtrx_3, mtrx_1 == mtrx_4)
     print(mtrx_1 != mtrx_2, mtrx_1 != mtrx_3, mtrx_1 != mtrx_4)
